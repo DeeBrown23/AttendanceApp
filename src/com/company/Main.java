@@ -1,9 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -38,6 +35,8 @@ public class Main {
         System.out.println("this is the new list " + AddtoGreater(absence, Addnum, Greaterthan));
         System.out.println("This is your sorted list " + Sort(absence));
         System.out.println("This is your shuffled list " + Shuffle(absence));
+        System.out.println("This is the list with no duplicates " + Unique(absence));
+        System.out.println(Histogram(absence));
 
     }
 
@@ -145,6 +144,28 @@ public class Main {
     public static ArrayList<Integer> Shuffle(ArrayList<Integer> absence) {
         Collections.shuffle(absence);
         return absence;
+    }
+
+    public static Set<Integer> Unique(ArrayList<Integer> absence) {
+        Set<Integer> UniqueAbsence = new HashSet<>();
+        UniqueAbsence.addAll(absence);
+        return UniqueAbsence;
+    }
+
+    public static int Histogram(ArrayList<Integer> absence) {
+        for (int i = 0; i < absence.size(); i++) {
+            i = Collections.frequency(absence, i);
+        }
+
+        for (int count = 0; count < absence.size(); count++) {
+            System.out.print((count + 1) + "\t|");
+
+            for (int h = 0; h < absence.get(count); h++)
+                System.out.print("#");
+
+            System.out.println();
+        }
+        return Histogram(absence);
     }
 }
 
