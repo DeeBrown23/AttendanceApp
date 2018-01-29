@@ -1,63 +1,110 @@
 package com.company;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
+        //Greeting line
         System.out.println("Welcome to the Attendance App");
+
+        //User Name input
         System.out.println("Please provide your name please: ");
         Scanner keyboard = new Scanner(System.in);
         String name = keyboard.nextLine();
+
+        //Welcome message
         System.out.println("Welcome " + name + " to the Attendance App");
+
+        //Absence list setup
         ArrayList<Integer> absence = new ArrayList<>();
-        System.out.println("The elements are " + GetAbsence(absence, name));
-        int count = 0;
-        System.out.println("This many students had perfect attendance " + GetPerfectAttendance(absence, count));
-        int sum = 0;
-        double avg = 0;
-        int lessthan = 0;
-        double percent = 0;
-        int total = 0;
-        System.out.println("This is the average of all absences " + GetAverage(absence, sum, avg));
-        System.out.println("percentage of students with less than 3 absences and perfect attendance " + Percentage(absence, count, lessthan, percent, total));
+
+        //Outputs list
+        System.out.println("The elements are " + getAbsence(absence, name.length()));
+
+        //Outputs perfect Attendance
+        System.out.println("This many students had perfect attendance " + getPerfectAttendance(absence));
+
+
+        //Average of all absences
+        System.out.println("This is the average of all absences " + getAverage(absence));
+
+        //Percentage of students with less than 3 absences and perfect attendance
+        System.out.println("percentage of students with less than 3 absences and perfect attendance " + percentage(absence));
+
+        //User inputs absence they are looking for
         System.out.println("What is the absence you are looking for: ");
-        int Specnum = keyboard.nextInt();
-        System.out.println("this is the index of that number " + IndexOf(absence, Specnum));
+        int specNum = keyboard.nextInt();
+
+       //Outputs index of absence user was looking for
+        System.out.println("this is the index of that number " + indexOf(absence, specNum));
+
+        //User inputs how many times the course meets
         System.out.println("How many times does your course meet: ");
-        int Coursemeet = keyboard.nextInt();
-        System.out.printf("these are the students that FE'D" + PercentofFE(absence, Coursemeet, percent, count));
-        System.out.println("this is the NON FE average " + AverageofNonFE(absence, sum, avg, Coursemeet));
+        int courseMeet = keyboard.nextInt();
+
+        //outputs Percent of students that FE'D
+        System.out.printf("Percent of the students that FE'D  " + percentofFE(absence, courseMeet));
+
+        //Average of students who did not FE
+        System.out.println(" this is the NON FE average " + averageofNonFE(absence, courseMeet));
+
+        //User input to add number
         System.out.println("what number do you want to add ");
-        int Addnum = keyboard.nextInt();
+        int addNum = keyboard.nextInt();
+
+        //User inputs number to add to everything greater than that
         System.out.println("what absence greater than to add to ");
-        int Greaterthan = keyboard.nextInt();
-        System.out.println("this is the new list " + AddtoGreater(absence, Addnum, Greaterthan));
-        System.out.println("This is your sorted list " + Sort(absence));
-        System.out.println("This is your shuffled list " + Shuffle(absence));
-        System.out.println("This is the list with no duplicates " + Unique(absence));
+        int greaterThan = keyboard.nextInt();
+
+        //Outputs new list
+        System.out.println("this is the new list " + addtoGreater(absence,addNum, greaterThan));
+
+       //Outputs sorted list
+        System.out.println("This is your sorted list " + sort(absence));
+
+        //Outputs shuffled list
+        System.out.println("This is your shuffled list " + shuffle(absence));
+
+        //Outputs list with no duplicates
+        System.out.println("This is the list with no duplicates " + unique(absence));
+
+        //Outputs histogram
         //System.out.println(Histogram(absence));
-       // System.out.println("This is your user sorted list " +UserSort(absence));
-        System.out.println("This is your user shuffled list " +UserShuffle(absence));
+
+        //Outputs user sorted list
+        // System.out.println("This is your user sorted list " +UserSort(absence));
+
+        //Outputs user shuffled list
+        System.out.println("This is your user shuffled list " + userShuffle(absence));
+
+        //User inputs five names
         System.out.println("input five names ");
         String name1 = keyboard.nextLine();
         String name2 = keyboard.nextLine();
         String name3 = keyboard.nextLine();
         String name4 = keyboard.nextLine();
         String name5 = keyboard.nextLine();
-        ArrayList<String> NameList = new ArrayList<>();
-        System.out.println("This is your list of names " +ListOfNames(name1,name2,name3,name4,name5, NameList));
-        System.out.println("This is your shuffled name list " +NameListShuffle(NameList));
-        //System.out.println("This is your new list " +NewNameList(NameList, absence));
 
+        //Sets up new Name list
+        ArrayList<String> nameList = new ArrayList<>();
 
+        //Outputs list of names
+        System.out.println("This is your list of names " + listOfNames(name1, name2, name3, name4, name5, nameList));
+
+        //Outputs Shuffled name list
+        System.out.println("This is your shuffled name list " + nameListShuffle(nameList));
+
+        //Outputs new longer list
+        System.out.println("This is your new list " +newNameList(nameList, absence));
 
 
     }
 
 
-    public static ArrayList<Integer> GetAbsence(ArrayList<Integer> absence, String name) {
-        for (int i = 0; i < name.length(); i++) {
+    public static ArrayList<Integer> getAbsence(ArrayList<Integer> absence, int length) {
+        for (int i = 0; i < length; i++) {
             Random rand = new Random();
             int num = rand.nextInt(11);
             absence.add(num);
@@ -66,18 +113,19 @@ public class Main {
         return absence;
     }
 
-    public static int GetPerfectAttendance(ArrayList<Integer> absence, int count) {
+    public static int getPerfectAttendance(ArrayList<Integer> absence) {
+        int count = 0;
         for (int i = 0; i < absence.size(); i++) {
             if (absence.get(i) == 0) {
                 count++;
-            } else {
             }
-
         }
         return count;
     }
 
-    public static double GetAverage(ArrayList<Integer> absence, int sum, double avg) {
+    public static double getAverage(ArrayList<Integer> absence) {
+        int sum = 0;
+        double avg;
         for (int i = 0; i < absence.size(); i++) {
             sum = sum + absence.get(i);
         }
@@ -85,11 +133,15 @@ public class Main {
         return avg;
     }
 
-    public static int Percentage(ArrayList<Integer> absence, int count, int lessthan, double percent, int total) {
+    public static int percentage(ArrayList<Integer> absence) {
+        double percent;
+        int count = 0;
+        int lessthan = 0;
+        int total;
         for (int i = 0; i < absence.size(); i++) {
             if (absence.get(i) == 0) {
                 count++;
-            } else if (absence.get(i) < 3) {
+            } if (absence.get(i) < 3) {
                 lessthan++;
 
             }
@@ -103,29 +155,28 @@ public class Main {
 
     }
 
-    public static int IndexOf(ArrayList<Integer> absence, int Specnum) {
-        int Specab = absence.indexOf(Specnum);
-        return Specab;
-
+    public static int indexOf(ArrayList<Integer> absence, int specNum) {
+        return absence.indexOf(specNum);
     }
 
-    public static double PercentofFE(ArrayList<Integer> absence, int Coursemeet, double percent, int count) {
+    public static double percentofFE(ArrayList<Integer> absence, int courseMeet) {
+        int count = 0;
+        double percent;
         for (int i = 0; i < absence.size(); i++) {
-            if (absence.get(i) == Coursemeet) {
+            if (absence.get(i) == courseMeet) {
                 count++;
             }
         }
-
         percent = (double) count / absence.size();
         percent = (percent * 100.0);
         return percent;
-
-
     }
 
-    public static double AverageofNonFE(ArrayList<Integer> absence, int sum, double avg, int Coursemeet) {
+    public static double averageofNonFE(ArrayList<Integer> absence, int courseMeet) {
+        int sum = 0;
+        double avg;
         for (int i = 0; i < absence.size(); i++) {
-            if (absence.get(i) != Coursemeet) {
+            if (absence.get(i) != courseMeet) {
                 sum = sum + absence.get(i);
             }
         }
@@ -134,129 +185,156 @@ public class Main {
 
     }
 
-    public static ArrayList<Integer> AddtoGreater(ArrayList<Integer> absence, int Addnum, int Greaterthan) {
-        for (int i = 0; i < absence.size(); i++) {
-            if (absence.size() > Greaterthan) {
-                int Newnum = absence.get(i) + Addnum;
-                absence.set(i, Newnum);
+    public static ArrayList<Integer> addtoGreater(ArrayList<Integer> absence, int addNum, int greaterThan) {
+        ArrayList<Integer> newabsenceList = absence;
+        for (int i = 0; i < newabsenceList.size(); i++) {
+            if (newabsenceList.size() > greaterThan) {
+                int newNum = newabsenceList.get(i) + addNum;
+                newabsenceList.set(i, newNum);
             }
-        }
-        for (int i = 0; i < absence.size(); i++) {
-            if (absence.get(i) < 0) {
-                absence.set(i, 0);
-            } else if (absence.get(i) > 15) {
-                absence.set(i, 15);
+            if (newabsenceList.get(i) < 0) {
+                newabsenceList.set(i, 0);
+            } else if (newabsenceList.get(i) > 15) {
+                newabsenceList.set(i, 15);
             }
 
         }
-        return absence;
+        return newabsenceList;
     }
 
-    public static ArrayList<Integer> Sort(ArrayList<Integer> absence) {
-        Collections.sort(absence);
-        return absence;
+    public static ArrayList<Integer> sort(ArrayList<Integer> absence) {
+        ArrayList<Integer> sort = absence;
+       Collections.sort(sort);
+       return sort;
     }
 
-    public static ArrayList<Integer> Shuffle(ArrayList<Integer> absence) {
-        Collections.shuffle(absence);
-        return absence;
+    public static ArrayList<Integer> shuffle(ArrayList<Integer> absence) {
+        ArrayList<Integer> shuffle = absence;
+        Collections.shuffle(shuffle);
+        return shuffle;
     }
 
-    public static Set<Integer> Unique(ArrayList<Integer> absence) {
+    public static Set<Integer> unique(ArrayList<Integer> absence) {
         Set<Integer> UniqueAbsence = new HashSet<>();
         UniqueAbsence.addAll(absence);
         return UniqueAbsence;
     }
 
-   // public static int Histogram(ArrayList<Integer> absence) {
-      //  for (int i = 0; i < absence.size(); i++) {
-          //  i = Collections.frequency(absence, i);
-       // }
+    // public static int Histogram(ArrayList<Integer> absence) {
+    //  for (int i = 0; i < absence.size(); i++) {
+    //  i = Collections.frequency(absence, i);
+    // }
 
-       // for (int count = 0; count < absence.size(); count++) {
-          //  System.out.print((count + 1) + "\t|");
+    // for (int count = 0; count < absence.size(); count++) {
+    //  System.out.print((count + 1) + "\t|");
 
-           // for (int h = 0; h < absence.get(count); h++)
-          //      System.out.print("#");
+    // for (int h = 0; h < absence.get(count); h++)
+    //      System.out.print("#");
 
-         //   System.out.println();
-      //  }
-      //  return Histogram(absence);
-  //  }
+    //   System.out.println();
+    //  }
+    //  return Histogram(absence);
+    //  }
 
-    public static ArrayList<Integer> UserSort(ArrayList<Integer> absence){
+    public static ArrayList<Integer> userSort(ArrayList<Integer> absence) {
         int temp;
-        for (int i = 1; i < absence.size(); i++){
-            for (int j = 1; j <absence.size(); j--){
-                if (absence.get(j) > absence.get(i)){
-                    temp = absence.get(i);
-                    absence.set(i,absence.get(j));
-                    absence.set(j,temp);
+        ArrayList <Integer> userSort = new ArrayList<>();
+        for (int i = 0; i < absence.size(); i++) {
+            userSort.add(absence.get(i));
+            for (int j = 1; j < absence.size(); j--) {
+                userSort.add(absence.get(j));
+                if (userSort.get(j) < userSort.get(i)) {
+                    temp = userSort.get(i);
+                    userSort.set(i, userSort.get(j));
+                    userSort.set(j, temp);
                 }
             }
 
         }
-        return absence;
+        return userSort;
     }
 
-    public static ArrayList<Integer> UserShuffle(ArrayList<Integer> absence){
+    public static ArrayList<Integer> userShuffle(ArrayList<Integer> absence) {
         Random ran = new Random();
         int temp;
         for (int i = 0; i < absence.size(); i++) {
             int num1 = ran.nextInt(absence.size());
             temp = absence.get(num1);
-            absence.set(num1,absence.get(i));
+            absence.set(num1, absence.get(i));
             absence.set(i, temp);
         }
         return absence;
     }
 
-    public static ArrayList<String> ListOfNames(String name1, String name2, String name3, String name4, String name5, ArrayList<String> NameList) {
-        NameList.add(name1);
-        NameList.add(name2);
-        NameList.add(name3);
-        NameList.add(name4);
-        NameList.add(name5);
+    public static ArrayList<String> listOfNames(String name1, String name2, String name3, String name4, String name5, ArrayList<String> nameList) {
+        nameList.add(name1);
+        nameList.add(name2);
+        nameList.add(name3);
+        nameList.add(name4);
+        nameList.add(name5);
 
-        return NameList;
+        return nameList;
 
 
     }
 
-    public static ArrayList<String> NameListShuffle(ArrayList<String> NameList) {
+    public static ArrayList<String> nameListShuffle(ArrayList<String> nameList) {
         Random ran = new Random();
         String temp;
-        for (int i = 0; i < NameList.size(); i++) {
-            int num1 = ran.nextInt(NameList.size());
-            temp = NameList.get(num1);
-            NameList.set(num1,NameList.get(i));
-            NameList.set(i, temp);
+        for (int i = 0; i < nameList.size(); i++) {
+            int num1 = ran.nextInt(nameList.size());
+            temp = nameList.get(num1);
+            nameList.set(num1, nameList.get(i));
+            nameList.set(i, temp);
 
         }
-        return NameList;
+        return nameList;
 
 
     }
 
-    public static ArrayList<String> NewNameList(ArrayList<String> NameList, ArrayList<Integer> absence){
-        ArrayList<String> NewNameList = new ArrayList<>();
+    public static ArrayList<String> newNameList(ArrayList<String> nameList, ArrayList<Integer> absence) {
+        ArrayList<String> newNameList = new ArrayList<>();
         Random rand = new Random();
         int length = absence.size();
-        for (int i = 0; i < length ; i++) {
-            int num1 = rand.nextInt(NameList.size());
-            NewNameList.set(num1, NameList.get(i));
-            NewNameList.set(i, NewNameList.get(num1));
-
+        for (int i = 0; i < length; i++) {
+           String name = nameList.get(rand.nextInt(nameList.size()));
+           newNameList.add(name);
 
         }
-        return NewNameList;
+        return newNameList;
+    }
 
+    public static boolean namesUsedOnce(ArrayList<String> newNameList){
 
-
-            }
-
-
+        for (int i = 0; i < newNameList.size() ; i++) {
 
         }
+    }
+
+    public static ArrayList<String> studentsWithPerfectAttendance(ArrayList<String> newNameList, ArrayList<Integer> absence){
+
+    }
+
+    public static ArrayList<String> whoFED (ArrayList<String> newNamelist, ArrayList<Integer> absence){
+
+    }
+
+    public static ArrayList<String> howManyCourses(ArrayList<String> newNamelist, ArrayList<Integer> absence){
+
+    }
+
+    public static ArrayList<Integer> whatCoursesFED(ArrayList<String> newNameList, ArrayList<Integer> absence){
+
+    }
+
+    public static int localDate(){
+        LocalDate today = LocalDate.now();
+    }
+
+    public static int
+
+
+}
 
 
