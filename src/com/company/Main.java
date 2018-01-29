@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         //Greeting line
-        System.out.println("Welcome to the Attendance App");
+        System.out.println("Hello to the Attendance App");
 
         //User Name input
         System.out.println("Please provide your name please: ");
