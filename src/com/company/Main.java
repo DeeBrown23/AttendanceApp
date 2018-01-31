@@ -73,7 +73,7 @@ public class Main {
         //System.out.println(Histogram(absence));
 
         //Outputs user sorted list
-        // System.out.println("This is your user sorted list " +UserSort(absence));
+//         System.out.println("This is your user sorted list " +userSort(absence));
 
         //Outputs user shuffled list
         System.out.println("This is your user shuffled list " + userShuffle(absence));
@@ -103,6 +103,12 @@ public class Main {
 
         //Outputs number of names used more than once
         System.out.println("This is how many times names where used more than once " +namesUsedOnce(newList));
+
+        //What students had Perfect Attendance
+        System.out.println("This is what students had perfect attendance " +studentsWithPerfectAttendance(nameList,absence));
+
+        //What students FE'D
+        System.out.println("These are the students that FE'D" +whoFED(nameList,absence,courseMeet));
 
 
     }
@@ -322,13 +328,30 @@ public class Main {
             return count;
     }
 
-    //public static ArrayList<String> studentsWithPerfectAttendance(ArrayList<String> newNameList, ArrayList<Integer> absence){
+    public static ArrayList<String> studentsWithPerfectAttendance(ArrayList<String> nameList, ArrayList<Integer> absence){
+        ArrayList<String> perfectNames = new ArrayList<>();
+        for (int i = 0; i < absence.size(); i++) {
+            if (absence.get(i) == 0){
+               int num =  absence.indexOf(i);
+               perfectNames.add(nameList.get(num));
+            }
 
-    //}
+        }
+        return perfectNames;
 
-    //public static ArrayList<String> whoFED (ArrayList<String> newNamelist, ArrayList<Integer> absence){
+    }
 
-    //}
+    public static ArrayList<String> whoFED (ArrayList<String> nameList, ArrayList<Integer> absence, int courseMeet){
+        ArrayList<String> whoFe = new ArrayList<>();
+        for (int i = 0; i < absence.size(); i++) {
+            if (absence.get(i) == courseMeet) {
+                int abs =  absence.indexOf(i);
+                whoFe.add(nameList.get(abs));
+            }
+    }
+
+    return whoFe;
+        }
 
     //public static ArrayList<String> howManyCourses(ArrayList<String> newNamelist, ArrayList<Integer> absence){
 
