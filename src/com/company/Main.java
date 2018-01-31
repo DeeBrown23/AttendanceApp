@@ -1,6 +1,5 @@
 package com.company;
 
-import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
@@ -98,6 +97,12 @@ public class Main {
 
         //Outputs new longer list
         System.out.println("This is your new list " +newNameList(nameList, absence));
+
+        //Sets up new arraylist
+        ArrayList<String> newList = newNameList(nameList,absence);
+
+        //Outputs number of names used more than once
+        System.out.println("This is how many times names where used more than once " +namesUsedOnce(newList));
 
 
     }
@@ -305,34 +310,38 @@ public class Main {
         return newNameList;
     }
 
-    public static boolean namesUsedOnce(ArrayList<String> newNameList){
+    public static int namesUsedOnce(ArrayList<String> newList){
 
-        for (int i = 0; i < newNameList.size() ; i++) {
-
+        Set<String> names = new HashSet<>();
+        int count = 0;
+        for (String i : newList){
+            if (!names.add(i)){
+                count ++;
+            }
         }
+            return count;
     }
 
-    public static ArrayList<String> studentsWithPerfectAttendance(ArrayList<String> newNameList, ArrayList<Integer> absence){
+    //public static ArrayList<String> studentsWithPerfectAttendance(ArrayList<String> newNameList, ArrayList<Integer> absence){
 
-    }
+    //}
 
-    public static ArrayList<String> whoFED (ArrayList<String> newNamelist, ArrayList<Integer> absence){
+    //public static ArrayList<String> whoFED (ArrayList<String> newNamelist, ArrayList<Integer> absence){
 
-    }
+    //}
 
-    public static ArrayList<String> howManyCourses(ArrayList<String> newNamelist, ArrayList<Integer> absence){
+    //public static ArrayList<String> howManyCourses(ArrayList<String> newNamelist, ArrayList<Integer> absence){
 
-    }
+    //}
 
-    public static ArrayList<Integer> whatCoursesFED(ArrayList<String> newNameList, ArrayList<Integer> absence){
+    //public static ArrayList<Integer> whatCoursesFED(ArrayList<String> newNameList, ArrayList<Integer> absence){
 
-    }
+   // }
 
-    public static int localDate(){
-        LocalDate today = LocalDate.now();
-    }
+    //public static int localDate(){
+       // LocalDate today = LocalDate.now();
+   // }
 
-    public static int
 
 
 }
