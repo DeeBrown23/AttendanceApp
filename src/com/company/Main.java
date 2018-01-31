@@ -1,5 +1,6 @@
 package com.company;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
@@ -110,6 +111,30 @@ public class Main {
         //What students FE'D
         System.out.println("These are the students that FE'D" +whoFED(nameList,absence,courseMeet));
 
+        //How many courses a student takes
+        System.out.println("What student are you looking for ");
+        String specStudent = keyboard.nextLine();
+        System.out.println(" " +specStudent + " has this many courses ");
+
+        //Which courses did student FE
+        System.out.println("What student are you looking for ");
+        String feStudent = keyboard.nextLine();
+        System.out.println(" " +feStudent + " FE'd these course courses ");
+
+        //The local date
+        System.out.println("This is today's date " +localDate());
+
+        //How many days have you been alive
+        System.out.println("what is your birthdate in the form of day , month , year. press enter after each number is entered ");
+        int day = keyboard.nextInt();
+        int month = keyboard.nextInt();
+        int year = keyboard.nextInt();
+        System.out.println("This is how many days you have been alive " +daysAlive(day,month,year));
+
+        //create list of dates
+        System.out.println("This is your list of dates " +datesList(newList, day,month,year));
+
+
 
     }
 
@@ -199,18 +224,22 @@ public class Main {
     public static ArrayList<Integer> addtoGreater(ArrayList<Integer> absence, int addNum, int greaterThan) {
         ArrayList<Integer> newabsenceList = absence;
         for (int i = 0; i < newabsenceList.size(); i++) {
-            if (newabsenceList.size() > greaterThan) {
-                int newNum = newabsenceList.get(i) + addNum;
-                newabsenceList.set(i, newNum);
-            }
-            if (newabsenceList.get(i) < 0) {
-                newabsenceList.set(i, 0);
-            } else if (newabsenceList.get(i) > 15) {
-                newabsenceList.set(i, 15);
-            }
+            if (newabsenceList.contains(greaterThan)) {
+                if (newabsenceList.get(i) > greaterThan) {
+                    int newNum = newabsenceList.get(i) + addNum;
+                    newabsenceList.set(i, newNum);
+                }
+                if (newabsenceList.get(i) < 0) {
+                    newabsenceList.set(i, 0);
+                }
+                if (newabsenceList.get(i) > 15) {
+                    newabsenceList.set(i, 15);
+                }
 
+            }
         }
-        return newabsenceList;
+            return newabsenceList;
+
     }
 
     public static ArrayList<Integer> sort(ArrayList<Integer> absence) {
@@ -328,12 +357,12 @@ public class Main {
             return count;
     }
 
-    public static ArrayList<String> studentsWithPerfectAttendance(ArrayList<String> nameList, ArrayList<Integer> absence){
+    public static ArrayList<String> studentsWithPerfectAttendance(ArrayList<String> newList, ArrayList<Integer> absence){
         ArrayList<String> perfectNames = new ArrayList<>();
         for (int i = 0; i < absence.size(); i++) {
             if (absence.get(i) == 0){
                int num =  absence.indexOf(i);
-               perfectNames.add(nameList.get(num));
+               perfectNames.add(newList.get(num));
             }
 
         }
@@ -341,12 +370,12 @@ public class Main {
 
     }
 
-    public static ArrayList<String> whoFED (ArrayList<String> nameList, ArrayList<Integer> absence, int courseMeet){
+    public static ArrayList<String> whoFED (ArrayList<String> newList, ArrayList<Integer> absence, int courseMeet){
         ArrayList<String> whoFe = new ArrayList<>();
         for (int i = 0; i < absence.size(); i++) {
             if (absence.get(i) == courseMeet) {
                 int abs =  absence.indexOf(i);
-                whoFe.add(nameList.get(abs));
+                whoFe.add(newList.get(abs));
             }
     }
 
@@ -361,9 +390,32 @@ public class Main {
 
    // }
 
-    //public static int localDate(){
-       // LocalDate today = LocalDate.now();
-   // }
+    public static LocalDate localDate(){
+        LocalDate  localDate = LocalDate.now();
+        return localDate;
+    }
+
+    public static int daysAlive(int day, int month, int year){
+       // LocalDate birthdate = LocalDate.of(day,month,year);
+        LocalDate localDate = LocalDate.now();
+        int yearsAlive = year - localDate.getYear();
+        int daysAlive = yearsAlive * 365;
+        return daysAlive;
+    }
+    public static ArrayList<LocalDate> datesList(ArrayList<String> newList, int day, int month, int year){
+        ArrayList<LocalDate> randDates = new ArrayList<>();
+        LocalDate localDate = LocalDate.now();
+        randDates.add(localDate);
+        LocalDate birthdate = LocalDate.of(day, month, year);
+        randDates.add(birthdate);
+        for (int i = 0; i < newList.size(); i++) {
+            localDate.minusDays(20);
+            randDates.add(localDate);
+        }
+
+        return randDates;
+    }
+
 
 
 
