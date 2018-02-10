@@ -1,7 +1,5 @@
 package com.company;
 
-import com.sun.javafx.tools.resource.ResourceFilter;
-
 import java.time.LocalDate;
 import java.util.*;
 
@@ -116,13 +114,13 @@ public class Main {
 
         //How many courses a student takes
         System.out.println("What student are you looking for ");
-        String specStudent = keyboard.nextLine();
-        System.out.println(" " +specStudent + " has this many courses ");
+        String student = keyboard.nextLine();
+        System.out.println(" " +student + " has this many courses " +howManyCourses(newList,student));
 
         //Which courses did student FE
         System.out.println("What student are you looking for ");
         String feStudent = keyboard.nextLine();
-        System.out.println(" " +feStudent + " FE'd these course courses ");
+        System.out.println(" " +feStudent + " FE'd these course courses " +whatCoursesFED(newList,absence,feStudent,courseMeet));
 
         //The local date
         System.out.println("This is today's date " +localDate());
@@ -381,8 +379,8 @@ public class Main {
     public static ArrayList<String> studentsWithPerfectAttendance(ArrayList<String> newList, ArrayList<Integer> absence){
         ArrayList<String> perfectNames = new ArrayList<>();
         for (int i = 0; i < absence.size(); i++) {
-            if (absence.contains(0)){
-               int num =  absence.indexOf(i);
+            if (absence.get(i) == 0){
+               int num =  absence.get(i);
                perfectNames.add(newList.get(num));
             }
 
@@ -394,22 +392,38 @@ public class Main {
     public static ArrayList<String> whoFED (ArrayList<String> newList, ArrayList<Integer> absence, int courseMeet){
         ArrayList<String> whoFe = new ArrayList<>();
         for (int i = 0; i < absence.size(); i++) {
-            if (absence.contains(courseMeet)) {
-                int abs =  absence.indexOf(courseMeet);
-                whoFe.add(newList.get(abs));
+            if (absence.get(i) == courseMeet) {
+                whoFe.add(newList.get(absence.get(i)));
             }
     }
 
     return whoFe;
         }
 
-    //public static ArrayList<String> howManyCourses(ArrayList<String> newNamelist, ArrayList<Integer> absence){
+    public static int howManyCourses(ArrayList<String> newList, String student){
+       int count = 0;
+        for (int i = 0; i < newList.size(); i++) {
+            if (newList.get(i) == student){
+                count ++;
 
-    //}
+            }
+        }
+        return count;
 
-    //public static ArrayList<Integer> whatCoursesFED(ArrayList<String> newNameList, ArrayList<Integer> absence){
+    }
 
-   // }
+    public static ArrayList<Integer> whatCoursesFED(ArrayList<String> newList, ArrayList<Integer> absence, String feStudent, int courseMeet){
+        ArrayList<Integer> coursesFED = new ArrayList<>();
+            for (int i = 0; i < newList.size(); i++) {
+                if (newList.get(i) == feStudent){
+                    int abs = absence.get(newList.indexOf(feStudent));
+                    if (abs > courseMeet){
+                        coursesFED.add(absence.indexOf(abs));
+                    }
+                }
+            }
+        return coursesFED;
+   }
 
     public static LocalDate localDate(){
         LocalDate  localDate = LocalDate.now();
@@ -419,8 +433,9 @@ public class Main {
     public static int daysAlive(int day, int month, int year){
        LocalDate birthdate = LocalDate.of(year, month, day);
         LocalDate localDate = LocalDate.now();
-        int yearsAlive = year - localDate.getYear();
-        int daysAlive = yearsAlive * 365;
+        int yearsAlive = (int) birthdate.toEpochDay();
+        int currentDate = (int) localDate.toEpochDay();
+        int daysAlive = currentDate - yearsAlive;
         return daysAlive;
     }
     public static ArrayList<LocalDate> datesList(ArrayList<String> newList, int day, int month, int year){
