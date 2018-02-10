@@ -222,8 +222,8 @@ public class Main {
             }
         }
         percent = (double) count / absence.size();
-        percent = (percent * 100.0);
-        return percent;
+        double finalpercent = (double) (percent * 100);
+        return finalpercent;
     }
 
     public static double averageofNonFE(ArrayList<Integer> absence, int courseMeet) {
@@ -392,8 +392,9 @@ public class Main {
     public static ArrayList<String> whoFED (ArrayList<String> newList, ArrayList<Integer> absence, int courseMeet){
         ArrayList<String> whoFe = new ArrayList<>();
         for (int i = 0; i < absence.size(); i++) {
-            if (absence.get(i) == courseMeet) {
-                whoFe.add(newList.get(absence.get(i)));
+            if (absence.get(i) > courseMeet){
+                int abs = absence.get(i);
+                whoFe.add(newList.get(abs));
             }
     }
 
@@ -403,7 +404,7 @@ public class Main {
     public static int howManyCourses(ArrayList<String> newList, String student){
        int count = 0;
         for (int i = 0; i < newList.size(); i++) {
-            if (newList.get(i) == student){
+            if (newList.get(i).equals(student)){
                 count ++;
 
             }
@@ -415,7 +416,7 @@ public class Main {
     public static ArrayList<Integer> whatCoursesFED(ArrayList<String> newList, ArrayList<Integer> absence, String feStudent, int courseMeet){
         ArrayList<Integer> coursesFED = new ArrayList<>();
             for (int i = 0; i < newList.size(); i++) {
-                if (newList.get(i) == feStudent){
+                if (newList.get(i).equals(feStudent)){
                     int abs = absence.get(newList.indexOf(feStudent));
                     if (abs > courseMeet){
                         coursesFED.add(absence.indexOf(abs));
