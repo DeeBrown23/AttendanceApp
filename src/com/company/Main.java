@@ -1,5 +1,7 @@
 package com.company;
 
+import com.sun.javafx.tools.resource.ResourceFilter;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -82,6 +84,7 @@ public class Main {
         //User inputs five names
         System.out.println("input five names ");
         String name1 = keyboard.nextLine();
+        name1 = keyboard.nextLine();
         String name2 = keyboard.nextLine();
         String name3 = keyboard.nextLine();
         String name4 = keyboard.nextLine();
@@ -133,6 +136,23 @@ public class Main {
 
         //create list of dates
         System.out.println("This is your list of dates " +datesList(newList, day,month,year));
+
+        //Create date list
+        ArrayList<LocalDate> datelist = datesList(newList, day,month,year);
+
+        //Output date Range
+        System.out.println("This is the range " +dateRange(datelist));
+
+        //Ask for specific date
+        System.out.println("What date are you looking for? (Enter in the form of day , month , year. press enter after each number is entered)");
+        day = keyboard.nextInt();
+        month = keyboard.nextInt();
+        year = keyboard.nextInt();
+        LocalDate specDate = LocalDate.of(year, month, day);
+
+        //Output the index of students at that date
+        System.out.println("This is the indexes of the students at absent at that date " +specDate(datelist,newList,specDate));
+
 
 
 
@@ -312,6 +332,7 @@ public class Main {
         nameList.add(name3);
         nameList.add(name4);
         nameList.add(name5);
+        System.out.println(nameList);
 
         return nameList;
 
@@ -360,7 +381,7 @@ public class Main {
     public static ArrayList<String> studentsWithPerfectAttendance(ArrayList<String> newList, ArrayList<Integer> absence){
         ArrayList<String> perfectNames = new ArrayList<>();
         for (int i = 0; i < absence.size(); i++) {
-            if (absence.get(i) == 0){
+            if (absence.contains(0)){
                int num =  absence.indexOf(i);
                perfectNames.add(newList.get(num));
             }
@@ -373,8 +394,8 @@ public class Main {
     public static ArrayList<String> whoFED (ArrayList<String> newList, ArrayList<Integer> absence, int courseMeet){
         ArrayList<String> whoFe = new ArrayList<>();
         for (int i = 0; i < absence.size(); i++) {
-            if (absence.get(i) == courseMeet) {
-                int abs =  absence.indexOf(i);
+            if (absence.contains(courseMeet)) {
+                int abs =  absence.indexOf(courseMeet);
                 whoFe.add(newList.get(abs));
             }
     }
@@ -396,25 +417,88 @@ public class Main {
     }
 
     public static int daysAlive(int day, int month, int year){
-       // LocalDate birthdate = LocalDate.of(day,month,year);
+       LocalDate birthdate = LocalDate.of(year, month, day);
         LocalDate localDate = LocalDate.now();
         int yearsAlive = year - localDate.getYear();
         int daysAlive = yearsAlive * 365;
         return daysAlive;
     }
     public static ArrayList<LocalDate> datesList(ArrayList<String> newList, int day, int month, int year){
+        Random rand = new Random();
         ArrayList<LocalDate> randDates = new ArrayList<>();
         LocalDate localDate = LocalDate.now();
         randDates.add(localDate);
-        LocalDate birthdate = LocalDate.of(day, month, year);
+        LocalDate birthdate = LocalDate.of(year, month, day);
         randDates.add(birthdate);
         for (int i = 0; i < newList.size(); i++) {
-            localDate.minusDays(20);
+           localDate = localDate.minusDays(rand.nextInt(20));
             randDates.add(localDate);
         }
 
         return randDates;
     }
+
+    public static LocalDate min(ArrayList<LocalDate> datelist){
+        LocalDate min = datelist.get(0);
+        for (int i = 0; i < datelist.size(); i++) {
+           if (datelist.get(i).isBefore(min)) {
+               min = datelist.get(i);
+           }
+
+        }
+        return min;
+    }
+
+    public static LocalDate max(ArrayList<LocalDate> datelist){
+        LocalDate max= datelist.get(0);
+        for (int i = 0; i < datelist.size(); i++) {
+            if ((datelist.get(i).isAfter(max))) {
+                 max = datelist.get(i);
+            }
+
+        }
+        return max;
+    }
+
+    public static int dateRange(ArrayList<LocalDate> datelist){
+        LocalDate max = max(datelist);
+        LocalDate min = min(datelist);
+
+        int years = max.getYear() - min.getYear();
+        int range = years * 365;
+
+        return range;
+    }
+
+    public static int specDate(ArrayList<LocalDate> datelist, ArrayList<String> newList, LocalDate specDate){
+      int num = 0;
+        for (int i = 0; i < datelist.size(); i++) {
+            if (datelist.contains(specDate)) {
+                num = datelist.indexOf(specDate);
+            }
+            }
+            return num;
+    }
+
+    public static ArrayList<Integer> sameDates(ArrayList<LocalDate> datelist, ArrayList<String> newList){
+      Map<LocalDate, ArrayList<Integer> > findSameDates = new HashMap<>();
+        for (int i = 0; i < datelist.size() ; i++) {
+            LocalDate date = datelist.get(i);
+            ArrayList<Integer> local;
+            int name = newList.indexOf(i);
+            local = findSameDates.get(date);
+            local.add(name);
+            findSameDates.put(date, local);
+        }
+
+
+
+
+return null;
+
+    }
+
+
 
 
 
