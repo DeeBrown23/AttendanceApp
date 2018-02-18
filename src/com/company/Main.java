@@ -71,7 +71,7 @@ public class Main {
         System.out.println("This is the list with no duplicates " + unique(absence));
 
         //Outputs histogram
-        //System.out.println(Histogram(absence));
+        System.out.println(Histogram(absence));
 
         //Outputs user sorted list
 //         System.out.println("This is your user sorted list " +userSort(absence));
@@ -110,7 +110,7 @@ public class Main {
         System.out.println("This is what students had perfect attendance " +studentsWithPerfectAttendance(nameList,absence));
 
         //What students FE'D
-        System.out.println("These are the students that FE'D" +whoFED(nameList,absence,courseMeet));
+       // System.out.println("These are the students that FE'D" +whoFED(nameList,absence,courseMeet));
 
         //How many courses a student takes
         System.out.println("What student are you looking for ");
@@ -150,6 +150,9 @@ public class Main {
 
         //Output the index of students at that date
         System.out.println("This is the indexes of the students at absent at that date " +specDate(datelist,newList,specDate));
+
+        //Output students with same date
+        System.out.println("These are the students with the same dates " +sameDates(datelist,newList));
 
 
 
@@ -278,21 +281,20 @@ public class Main {
         return UniqueAbsence;
     }
 
-    // public static int Histogram(ArrayList<Integer> absence) {
-    //  for (int i = 0; i < absence.size(); i++) {
-    //  i = Collections.frequency(absence, i);
-    // }
+     public static Map<Integer, Integer> Histogram(ArrayList<Integer> absence) {
+        Map<Integer, Integer> Histogram = new HashMap<>();
+        for (int key : absence) {
+            if (!Histogram.containsKey(key)){
+                Histogram.put(key, 1);
+            }
+            else {
+                int value = Histogram.get(key) + 1;
+                Histogram.put(key, value);
+            }
+        }
+        return Histogram;
 
-    // for (int count = 0; count < absence.size(); count++) {
-    //  System.out.print((count + 1) + "\t|");
-
-    // for (int h = 0; h < absence.get(count); h++)
-    //      System.out.print("#");
-
-    //   System.out.println();
-    //  }
-    //  return Histogram(absence);
-    //  }
+     }
 
     public static ArrayList<Integer> userSort(ArrayList<Integer> absence) {
         int temp;
@@ -389,7 +391,7 @@ public class Main {
 
     }
 
-    public static ArrayList<String> whoFED (ArrayList<String> newList, ArrayList<Integer> absence, int courseMeet){
+   /* public static ArrayList<String> whoFED (ArrayList<String> newList, ArrayList<Integer> absence, int courseMeet){
         ArrayList<String> whoFe = new ArrayList<>();
         for (int i = 0; i < absence.size(); i++) {
             if (absence.get(i) > courseMeet){
@@ -399,7 +401,7 @@ public class Main {
     }
 
     return whoFe;
-        }
+        }*/
 
     public static int howManyCourses(ArrayList<String> newList, String student){
        int count = 0;
@@ -480,8 +482,9 @@ public class Main {
         LocalDate max = max(datelist);
         LocalDate min = min(datelist);
 
-        int years = max.getYear() - min.getYear();
-        int range = years * 365;
+        int maximum = (int) max.toEpochDay();
+        int minimum = (int) min.toEpochDay();
+        int range = maximum - minimum;
 
         return range;
     }
@@ -496,16 +499,22 @@ public class Main {
             return num;
     }
 
-    public static ArrayList<Integer> sameDates(ArrayList<LocalDate> datelist, ArrayList<String> newList){
-      Map<LocalDate, ArrayList<Integer> > findSameDates = new HashMap<>();
-        for (int i = 0; i < datelist.size() ; i++) {
-            LocalDate date = datelist.get(i);
-            ArrayList<Integer> local;
-            int name = newList.indexOf(i);
-            local = findSameDates.get(date);
-            local.add(name);
-            findSameDates.put(date, local);
+    public static ArrayList<String> sameDates(ArrayList<LocalDate> datelist, ArrayList<String> newList){
+      Map<LocalDate, ArrayList<String> > findSameDates = new HashMap<>();
+      ArrayList<String> same = new ArrayList<>();
+       for (LocalDate key : datelist){
+           if (!findSameDates.containsKey(key)){
+               findSameDates.put(key, newList);
+           }
+           else {
+                same = findSameDates.get(key);
+           }
+
+           return same;
         }
+
+
+
 
 
 
