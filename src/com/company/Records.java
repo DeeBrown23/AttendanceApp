@@ -9,9 +9,9 @@ public class Records {
     private LocalDate date;
 
     /**
-     @param n
-     @param abs
-     @param d
+     @param n The names in the records
+     @param abs The absences in the records
+     @param d the dates in the records
 
      */
 
