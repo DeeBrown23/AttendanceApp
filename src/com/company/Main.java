@@ -499,29 +499,37 @@ public class Main {
             return num;
     }
 
-    public static ArrayList<String> sameDates(ArrayList<LocalDate> datelist, ArrayList<String> newList){
+    public static ArrayList<LocalDate> sameDates(ArrayList<LocalDate> datelist, ArrayList<String> newList){
       Map<LocalDate, ArrayList<String> > findSameDates = new HashMap<>();
-      ArrayList<String> same = new ArrayList<>();
-       for (LocalDate key : datelist){
-           if (!findSameDates.containsKey(key)){
-               findSameDates.put(key, newList);
+      ArrayList<LocalDate> same = new ArrayList<>();
+        for (int i = 0; i < datelist.size() ; i++) {
+           if (!findSameDates.containsKey(i)) {
+               LocalDate key = datelist.get(i);
+               ArrayList<String> names = new ArrayList<>();
+               int index = datelist.indexOf(i);
+               String singleName = newList.get(index);
+               names.add(singleName);
+               findSameDates.put(key, names);
+
            }
-           else {
-                same = findSameDates.get(key);
+           else{
+               findSameDates.containsKey(i);
+               LocalDate key = datelist.get(i);
+               ArrayList<String> names = new ArrayList<>();
+               names = findSameDates.get(key);
+               int index = datelist.indexOf(i);
+               String singleName = newList.get(index);
+               names.add(singleName);
+               findSameDates.put(key, names);
            }
 
-           return same;
         }
 
-
-
-
-
-
-
-return null;
+        return ;
 
     }
+
+    //public static studentRecords();
 
 
 

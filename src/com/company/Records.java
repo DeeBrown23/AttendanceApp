@@ -30,17 +30,19 @@ public class Records {
         n = "Xavier";
     }
 
+
     public void setAbsences(int abs) {
-        abs = absences;
+        abs = name.length();
     }
 
     public void setDate(LocalDate d){
         d = date.minusDays(10);
     }
 
-    public void changeabs(int abs){
+
+
 
     }
 
-}
+
 
